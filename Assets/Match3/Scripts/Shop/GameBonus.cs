@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +8,7 @@ namespace Match3
         public PieceType type;
         public Level level;
         public GameGrid grid;
-        public AdsController adsController;
+        public RewardedAds rewardedAds;
 
         public int price;
         public int uses;
@@ -30,7 +28,7 @@ namespace Match3
             }
             else
             {
-                adsController.ShowAds();
+                rewardedAds.ShowAd();
             }
             uses++;
             switch(type)
