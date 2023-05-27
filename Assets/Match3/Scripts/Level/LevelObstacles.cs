@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Analytics;
 
 namespace Match3
 {
@@ -38,9 +40,24 @@ namespace Match3
             if (numMoves - _movesUsed == 0 && _numObstaclesLeft > 0)
             {
                 GameLose();
-                _sender.Send(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name, "Lose", $"{_movesUsed}",
-                $"{numMoves}", $"{Mathf.Round(_timer)}", $"0", $"{_numObstacles - _numObstaclesLeft}", $"{_numObstaclesLeft}",
-                $"{horisontalBonus}", $"{verticalBonus}", $"{rainbowBonus}", $"{currentScore}", $"0", $"0");
+                Analytics.CustomEvent(
+                    "gameOver",
+                    new Dictionary<string, object> {
+                        { "levelName", UnityEngine.SceneManagement.SceneManager.GetActiveScene().name },
+                        { "playerWon", false },
+                        { "movesUsed", _movesUsed },
+                        { "movesLeft", numMoves },
+                        { "timeUsed", Mathf.Round(_timer) },
+                        { "timeLeft", 0 },
+                        { "obstaclesDestroyed", _numObstacles - _numObstaclesLeft },
+                        { "obstaclesLeft", _numObstaclesLeft },
+                        { "horisontalBonus", horisontalBonus },
+                        { "verticalBonus", verticalBonus },
+                        { "rainbowBonus", rainbowBonus },
+                        { "score", currentScore },
+                        { "stars", 0 }
+                    }
+                );
             }
         }
 
@@ -59,9 +76,24 @@ namespace Match3
                 currentScore += ScorePerPieceCleared * (numMoves - _movesUsed);
                 hud.SetScore(currentScore);
                 GameWin();
-                _sender.Send(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name, "Win", $"{_movesUsed}",
-                $"{numMoves}", $"{Mathf.Round(_timer)}", $"0", $"{_numObstacles - _numObstaclesLeft}", $"{_numObstaclesLeft}",
-                $"{horisontalBonus}", $"{verticalBonus}", $"{rainbowBonus}", $"{currentScore}", $"{currentScore/10}", $"{hud._starIndex}");
+                Analytics.CustomEvent(
+                    "levelComplete",
+                    new Dictionary<string, object> {
+                        { "levelName", UnityEngine.SceneManagement.SceneManager.GetActiveScene().name },
+                        { "playerWon", true },
+                        { "movesUsed", _movesUsed },
+                        { "movesLeft", numMoves },
+                        { "timeUsed", Mathf.Round(_timer) },
+                        { "timeLeft", 0 },
+                        { "obstaclesDestroyed", _numObstacles - _numObstaclesLeft },
+                        { "obstaclesLeft", _numObstaclesLeft },
+                        { "horisontalBonus", horisontalBonus },
+                        { "verticalBonus", verticalBonus },
+                        { "rainbowBonus", rainbowBonus },
+                        { "score", currentScore },
+                        { "stars", 0 }
+                    }
+                );
             }
         }
     }

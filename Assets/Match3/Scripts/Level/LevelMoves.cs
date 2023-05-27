@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Analytics;
 
 namespace Match3
 {
@@ -31,21 +33,36 @@ namespace Match3
             hud.SetRemaining(numMoves - _movesUsed);
 
             if (numMoves - _movesUsed != 0) return;
-        
+
+            bool playerWon = false;
             if (currentScore >= targetScore)
             {
                 GameWin();
-                _sender.Send(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name, "Win", $"{_movesUsed}",
-                $"{numMoves}", $"{Mathf.Round(_timer)}", $"0", $"0", $"0", $"{horisontalBonus}", $"{verticalBonus}",
-                $"{rainbowBonus}", $"{currentScore}", $"{currentScore/10}", $"{hud._starIndex}");
+                playerWon = true;
             }
             else
             {
                 GameLose();
-                _sender.Send(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name, "Lose", $"{_movesUsed}",
-                $"{numMoves}", $"{Mathf.Round(_timer)}", $"0", $"0", $"0", $"{horisontalBonus}", $"{verticalBonus}",
-                $"{rainbowBonus}", $"{currentScore}", $"0", $"0");
             }
+
+            Analytics.CustomEvent(
+                "levelComplete",
+                new Dictionary<string, object> {
+                    { "levelName", UnityEngine.SceneManagement.SceneManager.GetActiveScene().name },
+                    { "playerWon", playerWon },
+                    { "movesUsed", _movesUsed },
+                    { "movesLeft", numMoves },
+                    { "timeUsed", Mathf.Round(_timer) },
+                    { "timeLeft", 0 },
+                    { "obstaclesDestroyed", 0 },
+                    { "obstaclesLeft", 0 },
+                    { "horisontalBonus", horisontalBonus },
+                    { "verticalBonus", verticalBonus },
+                    { "rainbowBonus", rainbowBonus },
+                    { "score", currentScore },
+                    { "stars", hud._starIndex }
+                }
+            );
         }
     }
 }

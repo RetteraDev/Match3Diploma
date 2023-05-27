@@ -7,7 +7,6 @@ namespace Match3
     {
         public GameGrid gameGrid;
         public Hud hud;
-        public DataSender _sender;
 
         public int score1Star;
         public int score2Star;
@@ -26,7 +25,6 @@ namespace Match3
         {
             gameGrid = this.GetComponent<GameGrid>();
             hud = this.GetComponent<Hud>();
-            _sender = this.GetComponent<DataSender>();
         }
         private void Start()
         {

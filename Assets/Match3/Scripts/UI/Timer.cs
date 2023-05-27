@@ -10,18 +10,13 @@ namespace Match3
         [Header("PlayerStatistics")]
         public PlayerStatisticsController PlayerStatisticsController;
         public PlayerStatistics PlayerStatistics;
-        public AppDataSender sender;
         [Header("Timer Settings")]
         public int timeLeft;
         public Text timerText;
         int currentHP, maxHP;
         int defaultStartMinutes = 0;
         int defaultStartSeconds = 0;
-        
-        void Awake()
-        {
-            sender = this.GetComponent<AppDataSender>();
-        }
+
         public void Start()
         {
             if(PlayerStatisticsController == null) currentHP = PlayerStatistics.currentHP;
@@ -65,8 +60,6 @@ namespace Match3
 
         private void OnApplicationQuit()
         {
-            sender.Send("Close Application");
-            PlayerPrefs.SetString("ApplicationQuit", "true");
             SaveTime();
         }
 
