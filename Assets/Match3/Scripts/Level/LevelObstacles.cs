@@ -40,23 +40,18 @@ namespace Match3
             if (numMoves - _movesUsed == 0 && _numObstaclesLeft > 0)
             {
                 GameLose();
-                Analytics.CustomEvent(
-                    "gameOver",
-                    new Dictionary<string, object> {
-                        { "levelName", UnityEngine.SceneManagement.SceneManager.GetActiveScene().name },
-                        { "playerWon", false },
-                        { "movesUsed", _movesUsed },
-                        { "movesLeft", numMoves },
-                        { "timeUsed", Mathf.Round(_timer) },
-                        { "timeLeft", 0 },
-                        { "obstaclesDestroyed", _numObstacles - _numObstaclesLeft },
-                        { "obstaclesLeft", _numObstaclesLeft },
-                        { "horisontalBonus", horisontalBonus },
-                        { "verticalBonus", verticalBonus },
-                        { "rainbowBonus", rainbowBonus },
-                        { "score", currentScore },
-                        { "stars", 0 }
-                    }
+
+                analyticSender.Send(
+                    1,
+                    false,
+                    _movesUsed,
+                    Mathf.Round(_timer),
+                    _numObstaclesLeft,
+                    horisontalBonus,
+                    verticalBonus,
+                    rainbowBonus,
+                    currentScore,
+                    0
                 );
             }
         }
@@ -76,23 +71,19 @@ namespace Match3
                 currentScore += ScorePerPieceCleared * (numMoves - _movesUsed);
                 hud.SetScore(currentScore);
                 GameWin();
-                Analytics.CustomEvent(
-                    "levelComplete",
-                    new Dictionary<string, object> {
-                        { "levelName", UnityEngine.SceneManagement.SceneManager.GetActiveScene().name },
-                        { "playerWon", true },
-                        { "movesUsed", _movesUsed },
-                        { "movesLeft", numMoves },
-                        { "timeUsed", Mathf.Round(_timer) },
-                        { "timeLeft", 0 },
-                        { "obstaclesDestroyed", _numObstacles - _numObstaclesLeft },
-                        { "obstaclesLeft", _numObstaclesLeft },
-                        { "horisontalBonus", horisontalBonus },
-                        { "verticalBonus", verticalBonus },
-                        { "rainbowBonus", rainbowBonus },
-                        { "score", currentScore },
-                        { "stars", 0 }
-                    }
+                
+                analyticSender.Send(
+                    1,
+                    true,
+                    _movesUsed,
+                    Mathf.Round(_timer),
+                    _numObstaclesLeft,
+                    horisontalBonus,
+                    verticalBonus,
+                    rainbowBonus,
+                    currentScore,
+                    0
+
                 );
             }
         }

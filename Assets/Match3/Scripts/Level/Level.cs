@@ -7,6 +7,7 @@ namespace Match3
     {
         public GameGrid gameGrid;
         public Hud hud;
+        public int levelNumber;
 
         public int score1Star;
         public int score2Star;
@@ -21,10 +22,14 @@ namespace Match3
 
         private bool _didWin;
 
+        public AnalyticsLevelComplete analyticSender;
+
+
         private void Awake()
         {
             gameGrid = this.GetComponent<GameGrid>();
             hud = this.GetComponent<Hud>();
+            analyticSender = this.GetComponent<AnalyticsLevelComplete>();
         }
         private void Start()
         {

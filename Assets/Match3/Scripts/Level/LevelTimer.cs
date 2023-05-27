@@ -31,34 +31,31 @@ namespace Match3
 
             if (timeInSeconds - _timer <= 0 && !levelCompleted)
             {
-                bool playerWon = false;
+                bool isWin = false;
                 if (currentScore >= targetScore)
                 {
                     GameWin();
-                    playerWon = true;
+                    isWin = true;
                 }
                 else
                 {
                     GameLose();
                 }
-                Analytics.CustomEvent(
-                    "levelComplete",
-                    new Dictionary<string, object> {
-                        { "levelName", UnityEngine.SceneManagement.SceneManager.GetActiveScene().name },
-                        { "playerWon", playerWon },
-                        { "movesUsed", _movesUsed },
-                        { "movesLeft", 0 },
-                        { "timeUsed", Mathf.Round(_timer) },
-                        { "timeLeft", Mathf.Round(timeInSeconds) },
-                        { "obstaclesDestroyed", 0 },
-                        { "obstaclesLeft", 0 },
-                        { "horisontalBonus", horisontalBonus },
-                        { "verticalBonus", verticalBonus },
-                        { "rainbowBonus", rainbowBonus },
-                        { "score", currentScore },
-                        { "stars", hud._starIndex }
-                    }
+
+                analyticSender.Send(
+                    1,
+                    isWin,
+                    _movesUsed,
+                    Mathf.Round(_timer),
+                    0,
+                    horisontalBonus,
+                    verticalBonus,
+                    rainbowBonus,
+                    currentScore,
+                    hud._starIndex
+
                 );
+
                 levelCompleted = true;
             }
         }

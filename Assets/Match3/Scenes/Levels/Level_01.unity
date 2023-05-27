@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.3708985, g: 0.3783704, b: 0.35722548, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -104,7 +104,7 @@ NavMeshSettings:
   serializedVersion: 2
   m_ObjectHideFlags: 0
   m_BuildSettings:
-    serializedVersion: 2
+    serializedVersion: 3
     agentTypeID: 0
     agentRadius: 0.5
     agentHeight: 2
@@ -117,7 +117,7 @@ NavMeshSettings:
     cellSize: 0.16666667
     manualTileSize: 0
     tileSize: 256
-    accuratePlacement: 0
+    buildHeightMesh: 0
     maxJobWorkers: 0
     preserveTilesOutsideBounds: 0
     debug:
@@ -2328,9 +2328,17 @@ Camera:
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
+  m_Iso: 200
+  m_ShutterSpeed: 0.005
+  m_Aperture: 16
+  m_FocusDistance: 10
+  m_FocalLength: 50
+  m_BladeCount: 5
+  m_Curvature: {x: 2, y: 11}
+  m_BarrelClipping: 0.25
+  m_Anamorphism: 0
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
-  m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -2450,7 +2458,9 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -3052,8 +3062,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1458197124}
-  - component: {fileID: 1458197137}
-  - component: {fileID: 1458197136}
   - component: {fileID: 1458197138}
   - component: {fileID: 1458197135}
   - component: {fileID: 1458197125}
@@ -3063,6 +3071,8 @@ GameObject:
   - component: {fileID: 1458197129}
   - component: {fileID: 1458197134}
   - component: {fileID: 1458197133}
+  - component: {fileID: 1458197140}
+  - component: {fileID: 1458197139}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -3099,7 +3109,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerStatisticsController: {fileID: 0}
   PlayerStatistics: {fileID: 1458197132}
-  sender: {fileID: 0}
   timeLeft: 0
   timerText: {fileID: 490555866}
 --- !u!114 &1458197129
@@ -3116,7 +3125,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameGrid: {fileID: 0}
   hud: {fileID: 0}
-  _sender: {fileID: 0}
+  levelNumber: 0
   score1Star: 15000
   score2Star: 18000
   score3Star: 21000
@@ -3125,6 +3134,7 @@ MonoBehaviour:
   horisontalBonus: 0
   verticalBonus: 0
   rainbowBonus: 0
+  analyticSender: {fileID: 1458197139}
   _timer: 0
   targetScore: 0
 --- !u!114 &1458197130
@@ -3230,7 +3240,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameGrid: {fileID: 0}
   hud: {fileID: 0}
-  _sender: {fileID: 0}
+  levelNumber: 0
   score1Star: 0
   score2Star: 0
   score3Star: 0
@@ -3239,6 +3249,7 @@ MonoBehaviour:
   horisontalBonus: 0
   verticalBonus: 0
   rainbowBonus: 0
+  analyticSender: {fileID: 1458197139}
   targetScore: 0
 --- !u!114 &1458197134
 MonoBehaviour:
@@ -3254,7 +3265,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameGrid: {fileID: 0}
   hud: {fileID: 0}
-  _sender: {fileID: 0}
+  levelNumber: 0
   score1Star: 0
   score2Star: 0
   score3Star: 0
@@ -3263,6 +3274,7 @@ MonoBehaviour:
   horisontalBonus: 0
   verticalBonus: 0
   rainbowBonus: 0
+  analyticSender: {fileID: 1458197139}
   _timer: 0
   obstacleTypes: 
 --- !u!114 &1458197135
@@ -3277,30 +3289,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9ba5bcdaad67e7489e133f6f604b6b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1458197136
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1458197120}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a472fc34b1653404d971c2edbcb457b3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1458197137
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1458197120}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 965caaa1fb89246cd8cc731106147a9c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1458197138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3311,6 +3299,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 58a7b195b866f034ca4f1e5130e3177b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1458197139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1458197120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83d0c61edd38b1b499887bffc82d76e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1458197140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1458197120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 450a528f863be3046a6eb094b47fc76d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1478342473
@@ -5231,7 +5243,7 @@ GameObject:
   m_IsActive: 1
 --- !u!95 &5564329469783417148
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -5248,7 +5260,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &5616875917299523258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5905,7 +5918,9 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0

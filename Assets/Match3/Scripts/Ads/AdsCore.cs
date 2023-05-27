@@ -15,11 +15,11 @@ public class AdsCore : MonoBehaviour, IUnityAdsInitializationListener
  
     public void InitializeAds()
     {
-    #if UNITY_IOS
+        #if UNITY_IOS
             _gameId = _iOSGameId;
-    #else
+        #else
             _gameId = _androidGameId;
-    #endif
+        #endif
         if (!Advertisement.isInitialized && Advertisement.isSupported)
         {
             Advertisement.Initialize(_gameId, _testMode, this);
